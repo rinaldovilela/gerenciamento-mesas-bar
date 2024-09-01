@@ -1,26 +1,25 @@
-// server/utils/printer.js
+
 
 const fs = require('fs');
 const PDFDocument = require('pdfkit');
 const path = require('path');
 const { print } = require('pdf-to-printer');
 
-// Função para gerar o PDF da comanda para impressoras POS de 58mm
+
 function generateComandaPDF(comanda) {
   return new Promise((resolve, reject) => {
     try {
       const doc = new PDFDocument({
-        size: [58 * 2.83, 167], // 58mm de largura, altura inicial, ajustável dinamicamente
-        margin: 5 // Margem mínima para maximizar o espaço
+        size: [58 * 2.83, 167], 
+        margin: 5 
       });
       const tempDir = path.join(__dirname, '../../temp');
       const pdfPath = path.join(tempDir, `comanda-${comanda.id}.pdf`);
 
-      // Criar o stream de gravação para o PDF
       const writeStream = fs.createWriteStream(pdfPath);
       doc.pipe(writeStream);
 
-      // Cabeçalho
+  
       doc.fontSize(10).text('Desmantelo Music Bar', {
         align: 'center',
         underline: true
