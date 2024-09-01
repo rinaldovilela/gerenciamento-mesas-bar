@@ -74,6 +74,31 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
     }
   };
 
+
+  const limparComanda = async () => {
+    if (mesa) {
+      try {
+        const response = await fetch(`http://localhost:5000/limparComanda`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mesaId: mesa.id }),
+        });
+        if (response.ok) {
+          console.log('Comanda limpa com sucesso')
+          setItens([]);
+        } else {
+          console.error('Erro ao limpar comanda');
+        }
+      } catch (error) {
+        console.error('Erro na requisição:', error);
+      }
+    }
+  }
+
+
+
   const calcularTotal = () => {
     return itens.reduce((total, item) => total + item.preco * item.quantidade, 0).toFixed(2);
   };
@@ -145,14 +170,22 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
             Adicionar
           </button>
         </div>
-      </div>
-
+      </div >
+      <div className='flex space-x-2'>
       <button
         onClick={imprimirComanda}
         className="bg-green-500 text-white px-6 py-3 rounded"
       >
         Imprimir Comanda
       </button>
+          
+      <button
+        onClick={limparComanda}
+        className="bg-red-500 text-white px-6 py-3 rounded"
+      >
+        Limpar Comanda
+      </button>
+      </div>
     </div>
   );
 };

@@ -33,9 +33,6 @@ router.post('/', async (req, res) => {
     // Imprime o PDF
     await printComanda(pdfPath);
 
-    // Limpa a comanda após a impressão
-    mesa.comanda = [];
-
     res.status(200).json({ message: 'Comanda impressa com sucesso' });
   } catch (error) {
     console.error('Erro ao imprimir a comanda:', error);
