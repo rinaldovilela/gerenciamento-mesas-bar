@@ -1,21 +1,23 @@
 'use client'
 
-import MesaSidebar from "../components/MesaSidebar";
-import Comanda from "../components/Comanda";
-import { useState } from "react";
+import React, { useState } from 'react';
+import MesaSidebar from '../components/MesaSidebar';
+import Comanda from '../components/Comanda';
 
 interface Mesa {
   id: number;
-  comanda: string[];
+  comanda: any[];
 }
 
-export default function Home() {
+const Home: React.FC = () => {
   const [mesaSelecionada, setMesaSelecionada] = useState<Mesa | null>(null);
 
   return (
     <div className="flex h-screen">
-      <MesaSidebar mesas={[]} onSelectMesa={setMesaSelecionada} />
+      <MesaSidebar onSelectMesa={setMesaSelecionada} />
       <Comanda mesa={mesaSelecionada} />
     </div>
   );
-}
+};
+
+export default Home;
