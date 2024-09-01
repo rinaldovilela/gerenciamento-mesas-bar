@@ -130,5 +130,3 @@ Se tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato
 - **LinkedIn:** [Seu LinkedIn](https://www.linkedin.com/in/rinaldo-alves-28847a194/)
 
 ---
-
-Este README foi projetado para ser atrativo, com uma estrutura clara e profissional que facilita a compreensão e utilização do projeto por outros desenvolvedores. A documentação técnica no início detalha o processo de implementação da nova funcionalidade de impressão, garantindo que qualquer pessoa possa replicar ou contribuir com o projeto facilmente.
