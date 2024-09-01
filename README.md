@@ -1,6 +1,4 @@
-Aqui está a documentação e um exemplo de um README moderno e atrativo para o seu projeto de gerenciamento de mesas. O README contém seções importantes como Introdução, Instalação, Uso e Contribuição, que fornecem uma visão geral clara e informações úteis para desenvolvedores e usuários que desejam utilizar ou contribuir para o projeto.
 
----
 
 # **Gerenciamento de Mesas de Bar**
 
