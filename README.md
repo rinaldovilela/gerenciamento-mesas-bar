@@ -122,11 +122,11 @@ Este projeto está sob a licença [MIT](https://opensource.org/licenses/MIT).
 
 ---
 
-## **📞 Contato**
+## **📞 Contact**
 
 Se tiver alguma dúvida ou sugestão, sinta-se à vontade para entrar em contato:
 
 - **Email:** rinaldoalvesvilela@hotmail.com
-- **LinkedIn:** [Seu LinkedIn](https://www.linkedin.com/in/rinaldo-alves-28847a194/)
+- **LinkedIn:** [My Linkedin](https://www.linkedin.com/in/rinaldo-alves-28847a194/)
 
 ---
