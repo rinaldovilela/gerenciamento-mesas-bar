@@ -1,6 +1,6 @@
 // server/models/mesa.js
 
-const mesas = [
+let mesas = [
     {
       id: 1,
       comanda: [
