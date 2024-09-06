@@ -30,4 +30,23 @@ router.get('/:mesaId', (req, res) => {
   res.status(200).json({ comanda: mesa.comanda });
 });
 
+
+// Remover item da comanda
+router.delete('/:mesaId/itens/:itemIndex', (req, res) => {
+  const { mesaId, itemIndex } = req.params;
+
+  const mesa = mesas.find((m) => m.id === parseInt(mesaId));
+  if (!mesa) {
+    return res.status(404).json({ message: 'Mesa não encontrada' });
+  }
+
+  // Remover o item da comanda pelo índice
+  mesa.comanda.splice(itemIndex, 1);
+  res.status(200).json({ message: 'Item removido da comanda', comanda: mesa.comanda });
+});
+
+
 module.exports = router;
+
+
+

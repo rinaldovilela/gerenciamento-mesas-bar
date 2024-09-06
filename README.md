@@ -13,6 +13,7 @@ Bem-vindo ao projeto de **Gerenciamento de Mesas de Bar**, uma aplicação moder
 - **Geração de PDFs:** Criação automática de PDFs das comandas usando **PDFKit**.
 - **Impressão Direta:** Envio dos PDFs para impressão em impressoras térmicas utilizando **pdf-to-printer**.
 - **Interface Intuitiva:** Layout responsivo e fácil de usar para o gerenciamento de mesas e pedidos.
+https://www.hyperui.dev/components/marketing/product-cards
 
 ---
 

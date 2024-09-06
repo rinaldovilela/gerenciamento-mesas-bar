@@ -51,6 +51,27 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
     }
   };
 
+
+  const removerItem = async (index: number) => {
+    if (mesa) {
+      try {
+        const response = await fetch(`http://localhost:5000/comandas/${mesa.id}/itens/${index}`, {
+          method: 'DELETE',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setItens(data.comanda);
+      } else {
+        console.error('Erro ao remover item da comanda');
+      }
+      } catch (error) {
+        console.error('Erro na requisição', error)
+      } 
+    }
+  }
+
+
   const imprimirComanda = async () => {
     if (mesa) {
       try {
@@ -127,6 +148,14 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
               <td className="border p-2 text-center">{item.quantidade}</td>
               <td className="border p-2 text-center">{item.preco.toFixed(2)}</td>
               <td className="border p-2 text-center">{(item.preco * item.quantidade).toFixed(2)}</td>
+              <td className='border p-2 text-center'>
+              <button
+                  onClick={() => removerItem(index)}
+                  className="bg-red-500 text-white px-4 py-1 rounded"
+                >
+                  Remover
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

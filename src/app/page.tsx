@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const [mesaSelecionada, setMesaSelecionada] = useState<Mesa | null>(null);
 
   return (
-    <div className="flex h-screen bg-gradient-to-r from-red-500 to-black text-gray-50">
+    <div className="flex h-screen bg-gradient-to-tr from-teal-400 to- text-white shadow-lg">
       <MesaSidebar onSelectMesa={setMesaSelecionada} />
       <Comanda mesa={mesaSelecionada} />
     </div>
