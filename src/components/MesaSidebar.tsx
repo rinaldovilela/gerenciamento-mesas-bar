@@ -101,17 +101,19 @@ const MesaSidebar: React.FC<MesaSidebarProps> = ({ onSelectMesa }) => {
       </div>
 
       <h3 className="text-lg font-medium mb-2">Mesas Adicionadas</h3>
-      <ul>
-        {mesas.map(mesa => (
-          <li
-            key={mesa.id}
-            className={`cursor-pointer text-5xl font-extrabold p-2 rounded-lg mb-2 ${mesaSelecionada?.id === mesa.id ? 'bg-gray-600' : 'hover:bg-gray-700'} text-gray-300`}
-            onClick={() => handleMesaClick(mesa)}
-          >
-            Mesa {mesa.id}
-          </li>
-        ))}
-      </ul>
+      <div className="max-h-96 overflow-y-auto">
+        <ul>
+          {mesas.map(mesa => (
+            <li
+              key={mesa.id}
+              className={`cursor-pointer text-2xl font-extrabold p-2 rounded-lg mb-2 ${mesaSelecionada?.id === mesa.id ? 'bg-gray-600' : 'hover:bg-gray-700'} text-gray-300`}
+              onClick={() => handleMesaClick(mesa)}
+            >
+              Mesa {mesa.id}
+            </li>
+          ))}
+        </ul>
+      </div>
       {mesaSelecionada && (
         <button
           onClick={() => deletarMesa(mesaSelecionada.id)}
