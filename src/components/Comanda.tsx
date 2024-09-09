@@ -63,6 +63,7 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
           const data = await response.json();
           setItens(data.comanda);
           setNovoItem({ nome: '', quantidade: 1, preco: 0, categoria: '' });
+          setPesquisaItem('');
         } else {
           console.error('Erro ao adicionar item à comanda');
         }
@@ -116,22 +117,25 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
 
   const limparComanda = async () => {
     if (mesa) {
-      try {
-        const response = await fetch(`http://localhost:5000/limparComanda`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ mesaId: mesa.id }),
-        });
-        if (response.ok) {
-          console.log('Comanda limpa com sucesso')
-          setItens([]);
-        } else {
-          console.error('Erro ao limpar comanda');
+      const confirmacao = window.confirm("Tem certeza que deseja limpar a comanda?");
+      if (confirmacao) {
+        try {
+          const response = await fetch(`http://localhost:5000/limparComanda`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ mesaId: mesa.id }),
+          });
+          if (response.ok) {
+            console.log('Comanda limpa com sucesso');
+            setItens([]);
+          } else {
+            console.error('Erro ao limpar comanda');
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
         }
-      } catch (error) {
-        console.error('Erro na requisição:', error);
       }
     }
   };
