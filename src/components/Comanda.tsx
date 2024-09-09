@@ -253,21 +253,24 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
       </div>
 
 
-      <div className="flex justify-between mt-4">
-        <button
-          onClick={imprimirComanda}
-          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-        >
-          Imprimir
-        </button>
-        <button
-          onClick={limparComanda}
-          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-        >
-          Limpar
-        </button>
-        <span className="text-xl font-semibold">Total: R${calcularTotal()}</span>
-      </div>
+      <div className="flex justify-between items-center p-2 bg-gray-800 border-t border-gray-700">
+          <span className="font-semibold">Total:</span>
+          <span>R${calcularTotal()}</span>
+        </div>
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={imprimirComanda}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Imprimir
+          </button>
+          <button
+            onClick={limparComanda}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Limpar
+          </button>
+        </div>
     </div>
   );
 };
