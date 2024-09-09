@@ -1,8 +1,9 @@
-// src/components/Comanda.tsx
-
+'use client'
 import React, { useState, useEffect } from 'react';
+import { itensPreDefinidos } from '@/data/itensPreDefinidos';
 
 interface Item {
+  categoria: string;
   nome: string;
   quantidade: number;
   preco: number;
@@ -17,67 +18,13 @@ interface ComandaProps {
   mesa: Mesa | null;
 }
 
-// Adicione a lista de itens pré-estabelecidos
-const itensPreDefinidos: Item[] = [
-  // Lista de itens como no código fornecido...
-  { nome: 'Caldinho de Feijão', preco: 7.00, quantidade: 1 },
-  { nome: 'Caldinho de Camarão', preco: 7.00, quantidade: 1 },
-  { nome: 'Espetinho Carne', preco: 10.00, quantidade: 1 },
-  { nome: 'Espetinho Frango', preco: 10.00, quantidade: 1 },
-  { nome: 'Espetinho Frango com Bacon', preco: 12.00, quantidade: 1 },
-  { nome: 'Espetinho Carne de Sol c/ Queijo', preco: 12.00, quantidade: 1 },
-  { nome: 'Espetinho Frango c/ Queijo', preco: 12.00, quantidade: 1 },
-  { nome: 'Pão de Alho', preco: 7.00, quantidade: 1 },
-  { nome: 'Frango a Passarinha c/ Fritas', preco: 25.00, quantidade: 1 },
-  { nome: 'Batata Frita', preco: 15.00, quantidade: 1 },
-  { nome: 'Bolinho (Queijo, Charque, Bacalhau)', preco: 15.00, quantidade: 1 },
-  { nome: 'Coxinha', preco: 15.00, quantidade: 1 },
-  { nome: 'Pastelzinho (Queijo, Carne, Frango)', preco: 20.00, quantidade: 1 },
-  { nome: 'Batata c/ Cheddar', preco: 20.00, quantidade: 1 },
-  { nome: 'Carne de Sol c/ Fritas', preco: 30.00, quantidade: 1 },
-  { nome: 'Calabresa c/ Fritas', preco: 20.00, quantidade: 1 },
-  { nome: 'Tripinha', preco: 18.00, quantidade: 1 },
-  { nome: 'Camarão Alho e Óleo', preco: 25.00, quantidade: 1 },
-  { nome: 'Camarão Empanado', preco: 20.00, quantidade: 1 },
-  { nome: 'Queijo Acebolado', preco: 15.00, quantidade: 1 },
-  { nome: 'Filé c/ Fritas', preco: 34.00, quantidade: 1 },
-  { nome: 'Brahma Chopp', preco: 9.00, quantidade: 1 },
-  { nome: 'Budweiser', preco: 11.00, quantidade: 1 },
-  { nome: 'Antarctica Original', preco: 12.00, quantidade: 1 },
-  { nome: 'Stella Artois', preco: 13.00, quantidade: 1 },
-  { nome: 'Heineken', preco: 14.00, quantidade: 1 },
-  { nome: 'Água sem gás', preco: 3.00, quantidade: 1 },
-  { nome: 'Água com gás', preco: 4.00, quantidade: 1 },
-  { nome: 'Água de coco', preco: 5.00, quantidade: 1 },
-  { nome: 'Suco Copo 300ml (Acerola, Cajá, Graviola)', preco: 6.00, quantidade: 1 },
-  { nome: 'Refrigerante Lata', preco: 6.00, quantidade: 1 },
-  { nome: 'H2O', preco: 7.00, quantidade: 1 },
-  { nome: 'Energético', preco: 12.00, quantidade: 1 },
-  { nome: 'Caipirinha', preco: 8.00, quantidade: 1 },
-  { nome: 'Caipirosca', preco: 9.00, quantidade: 1 },
-  { nome: 'Caipifruta (Morango, Maracujá)', preco: 12.00, quantidade: 1 },
-  { nome: 'Ice', preco: 10.00, quantidade: 1 },
-  { nome: 'Skol Beats', preco: 10.00, quantidade: 1 },
-  { nome: 'Chopp Vinho', preco: 10.00, quantidade: 1 },
-  { nome: 'Gin', preco: 8.00, quantidade: 1 },
-  { nome: 'Black White', preco: 8.00, quantidade: 1 },
-  { nome: 'Johnnie Red', preco: 11.00, quantidade: 1 },
-  { nome: 'Johnnie Black', preco: 14.00, quantidade: 1 },
-  { nome: 'Vodka Smirnoff', preco: 8.00, quantidade: 1 },
-  { nome: 'Pitú (Quartinho)', preco: 6.00, quantidade: 1 },
-  { nome: 'Pitú Gold (Dose)', preco: 8.00, quantidade: 1 },
-  { nome: 'Bananinha (Dose)', preco: 10.00, quantidade: 1 },
-  { nome: 'Sangue de Puta (Dose)', preco: 9.00, quantidade: 1 },
-  { nome: 'Alcatrão (Quartinho)', preco: 8.00, quantidade: 1 },
-];
-
-const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
+const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
   const [itens, setItens] = useState<Item[]>([]);
-  const [novoItem, setNovoItem] = useState<Item>({ nome: '', quantidade: 1, preco: 0 });
+  const [novoItem, setNovoItem] = useState<Item>({ nome: '', quantidade: 1, preco: 0, categoria: '' });
   const [itensDisponiveis, setItensDisponiveis] = useState<Item[]>(itensPreDefinidos);
   const [pesquisaItem, setPesquisaItem] = useState<string>('');
   const [itensFiltrados, setItensFiltrados] = useState<Item[]>(itensPreDefinidos);
-
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState<string | null>(null);
 
   useEffect(() => {
     if (mesa) {
@@ -92,22 +39,30 @@ const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
     setItensFiltrados(resultados);
   }, [pesquisaItem, itensDisponiveis]);
 
+  // Agrupamento dos itens por categoria
+  const itensPorCategoria = itensDisponiveis.reduce((acc: { [key: string]: Item[] }, item) => {
+    if (!acc[item.categoria]) {
+      acc[item.categoria] = [];
+    }
+    acc[item.categoria].push(item);
+    return acc;
+  }, {});
 
-  const adicionarItem = async () => {
-    if (mesa && novoItem.nome && novoItem.preco > 0 && novoItem.quantidade > 0) {
+  const adicionarItem = async (item: Item) => {
+    if (mesa && item.nome && item.preco > 0 && item.quantidade > 0) {
       try {
         const response = await fetch(`http://localhost:5000/comandas/${mesa.id}/itens`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(novoItem),
+          body: JSON.stringify(item),
         });
 
         if (response.ok) {
           const data = await response.json();
           setItens(data.comanda);
-          setNovoItem({ nome: '', quantidade: 1, preco: 0 });
+          setNovoItem({ nome: '', quantidade: 1, preco: 0, categoria: '' });
         } else {
           console.error('Erro ao adicionar item à comanda');
         }
@@ -131,8 +86,8 @@ const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
           console.error('Erro ao remover item da comanda');
         }
       } catch (error) {
-        console.error('Erro na requisição', error)
-      } 
+        console.error('Erro na requisição', error);
+      }
     }
   };
 
@@ -190,7 +145,7 @@ const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
   }
 
   return (
-    <div className="w-full  bg-gray-800 text-white shadow-lg rounded-lg p-4 border border-gray-700">
+    <div className="w-full bg-gray-800 text-white shadow-lg rounded-lg p-4 border border-gray-700 overflow-auto">
       <h2 className="text-xl font-semibold mb-4">Comanda da Mesa {mesa.id}</h2>
       
       <div className="mb-4 flex items-center gap-2">
@@ -206,7 +161,7 @@ const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
             onChange={(e) => setPesquisaItem(e.target.value)}
             className="block w-full max-w-48 bg-gray-700 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {itensFiltrados.length > 0 && (
+          {pesquisaItem && itensFiltrados.length > 0 && (
             <ul className="absolute overflow-y-auto z-10 mt-1 w-full max-w-xs bg-gray-700 border border-gray-600 rounded-lg overflow-hidden">
               {itensFiltrados.map(item => (
                 <li
@@ -247,45 +202,77 @@ const Comanda: React.FC<{ mesa: Mesa }> = ({ mesa }) => {
         </div>
         
         <button
-          onClick={adicionarItem}
+          onClick={() => adicionarItem(novoItem)}
           className="ml-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg"
         >
           Adicionar Item
         </button>
       </div>
 
-      <ul className="mb-4">
-        {itens.map((item, index) => (
-          <li key={index} className="flex items-center justify-between p-2 bg-gray-700 rounded-lg mb-2">
-            <span>{item.nome} - R${item.preco.toFixed(2)} x {item.quantidade}</span>
-            <button
-              onClick={() => removerItem(index)}
-              className="p-1 bg-red-600 hover:bg-red-700 text-white rounded-lg"
-            >
-              Remover
-            </button>
-          </li>
+      <div className="mb-6 flex gap-4">
+        {Object.keys(itensPorCategoria).map(categoria => (
+          <button
+            key={categoria}
+            onClick={() => setCategoriaSelecionada(categoria === categoriaSelecionada ? null : categoria)}
+            className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+          >
+            {categoria}
+          </button>
         ))}
-      </ul>
-
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-lg font-semibold">Total:</span>
-        <span className="text-lg font-semibold">R${calcularTotal()}</span>
       </div>
 
-      <div className="flex gap-2">
-        <button
-          onClick={imprimirComanda}
-          className="w-52 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
-        >
-          Imprimir Comanda
-        </button>
-        <button
-          onClick={limparComanda}
-          className="w-52 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg"
-        >
-          Limpar Comanda
-        </button>
+      {categoriaSelecionada && (
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-2 text-gray-300">{categoriaSelecionada}</h3>
+          <ul className="list-disc pl-5">
+            {itensPorCategoria[categoriaSelecionada].map((item) => (
+              <li key={item.nome} className="flex justify-between items-center bg-gray-700 rounded-lg p-2 mb-2">
+                <span>{item.nome} - R${item.preco.toFixed(2)}</span>
+                <button
+                  onClick={() => adicionarItem({ ...item, quantidade: novoItem.quantidade })}
+                  className="ml-2 px-2 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  Adicionar
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="flex flex-col gap-4">
+        <h3 className="text-lg font-semibold mb-2">Itens da Comanda</h3>
+        <ul className="list-disc pl-5">
+          {itens.map((item, index) => (
+            <li key={index} className="flex justify-between items-center bg-gray-700 rounded-lg p-2 mb-2">
+              <span>{item.nome} - {item.quantidade} x R${item.preco.toFixed(2)}</span>
+              <button
+                onClick={() => removerItem(index)}
+                className="px-2 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                Remover
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="flex justify-between items-center p-2 bg-gray-800 border-t border-gray-700">
+          <span className="font-semibold">Total:</span>
+          <span>R${calcularTotal()}</span>
+        </div>
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={imprimirComanda}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            Imprimir
+          </button>
+          <button
+            onClick={limparComanda}
+            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          >
+            Limpar
+          </button>
+        </div>
       </div>
     </div>
   );

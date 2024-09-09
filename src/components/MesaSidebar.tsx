@@ -72,7 +72,7 @@ const MesaSidebar: React.FC<MesaSidebarProps> = ({ onSelectMesa }) => {
   };
 
   return (
-    <div className="w-full max-w-xs bg-gray-800 text-white shadow-lg rounded-lg p-4 border border-gray-700">
+    <div className="w-full max-w-xs bg-gray-800 text-white shadow-lg rounded-lg p-4 border border-gray-700 overflow-auto">
       <h2 className="text-xl font-semibold mb-4">Mesas</h2>
 
       <div className="mb-4">
