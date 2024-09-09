@@ -205,7 +205,7 @@ const Comanda: React.FC<ComandaProps> = ({ mesa }) => {
       </div>
 
         {categoriaSelecionada && (
-          <div className="mb-6">
+          <div className="mb-6 max-h-52 overflow-x-auto">
             <h3 className="text-lg font-semibold mb-2 text-gray-300">Itens Disponíveis - {categoriaSelecionada}</h3>
             <ul className="list-disc pl-5">
               {itensPorCategoria[categoriaSelecionada].map(item => (
